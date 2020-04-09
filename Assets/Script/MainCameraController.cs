@@ -1,16 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using SimpleJSON;
+
 
 public class MainCameraController : MonoBehaviour
 {
 
     // Start is called before the first frame update
-    
+    public Text centerText;
     void Start()
     {;
-        callLibFunction("connectSocket","wss://fmt0duuywk.execute-api.us-east-1.amazonaws.com/uat");
+        startConnectToSocket();
     }
+
+    
 
     // Update is called once per frame
     void Update()
@@ -18,11 +23,20 @@ public class MainCameraController : MonoBehaviour
         
     }
 
+    void startConnectToSocket(){
+        updateCenterText("Start Connecting to Socket");
+        callLibFunction("connectSocket","wss://fmt0duuywk.execute-api.us-east-1.amazonaws.com/uat");
+    }
+
+    void updateCenterText(string _str){
+        centerText.text = _str;
+    }
     void JavaMessage(string _str){
         callLibFunction("printLogForUnity",_str);
     }
 
     void onWebSocketConnected(string _data){
+         updateCenterText("Socket connected , joining the room");
         callLibFunction("socketSendMsg","{\"action\":\"registerType\",\"type\":\"gamehost\"}");
     }
     void onWebSocketReceiveData(string _data){
