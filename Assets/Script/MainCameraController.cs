@@ -36,11 +36,14 @@ public class MainCameraController : MonoBehaviour
     }
 
     void onWebSocketConnected(string _data){
-         updateCenterText("Socket connected , joining the room");
+        updateCenterText("Socket connected , joining the room");
         callLibFunction("socketSendMsg","{\"action\":\"registerType\",\"type\":\"gamehost\"}");
     }
     void onWebSocketReceiveData(string _data){
         JavaMessage(_data);
+        var N = JSON.Parse(_data);
+        var roomid = N["roomid"].Value;  
+        updateCenterText("Room ID : "+roomid);
     }
 
     void callLibFunction(string funcName, string data){
