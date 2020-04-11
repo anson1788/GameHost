@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using SimpleJSON;
+using UnityEngine.SceneManagement;
 
-
-public class MainCameraController : MonoBehaviour
+public class EntryMainCameraController : CommonController
 {
 
     // Start is called before the first frame update
     public Text centerText;
     void Start()
-    {;
+    {
         startConnectToSocket();
     }
 
@@ -31,9 +31,7 @@ public class MainCameraController : MonoBehaviour
     void updateCenterText(string _str){
         centerText.text = _str;
     }
-    void JavaMessage(string _str){
-        callLibFunction("printLogForUnity",_str);
-    }
+
 
     void onWebSocketConnected(string _data){
         updateCenterText("Socket connected , joining the room");
@@ -42,13 +40,29 @@ public class MainCameraController : MonoBehaviour
     void onWebSocketReceiveData(string _data){
         JavaMessage(_data);
         var N = JSON.Parse(_data);
-        var roomid = N["roomid"].Value;  
-        updateCenterText("Room ID : "+roomid);
+        if(N["roomid"] != null){
+            var roomid = N["roomid"].Value;  
+            updateCenterText("Room ID : "+roomid);
+        }else if(N["action"] != null && N["action"].Value=="startGame"){
+            goToNextScene();
+        }
     }
 
-    void callLibFunction(string funcName, string data){
-        AndroidJavaClass unity = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
-        AndroidJavaClass cSocketHelper = new AndroidJavaClass("com.example.gamehostlib.cSocketHelper");
-        cSocketHelper.CallStatic(funcName,data);
+    void goToNextScene(){
+        StartCoroutine(LoadSceneAsync());
+    }
+
+    IEnumerator LoadSceneAsync()
+    {
+        // The Application loads the Scene in the background as the current Scene runs.
+        // This is particularly good for creating loading screens.
+        // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
+        // a sceneBuildIndex of 1 as shown in Build Settings.
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("RingDemoScene");
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
     }
 }
