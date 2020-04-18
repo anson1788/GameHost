@@ -18,13 +18,13 @@ public class RingDemoController : CommonController
     void Update()
     {
         //Debug.Log("Hello: " + mesh.mesh.bounds.size.x);
-        if (Input.GetKeyDown(KeyCode.UpArrow)){
-                  anim.speed = 0.1f;
-                  anim.Play("Inbound");
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow)){
-                   anim.speed = 1.0f;
-                  anim.Play("InboundOut");
+       foreach(Touch touch in Input.touches)
+        {
+            if (touch.phase == TouchPhase.Began)
+            {
+                  anim.speed = 2.0f;
+                  anim.Play("OutboundIn");
+            }
         }
     }
 
@@ -35,16 +35,16 @@ public class RingDemoController : CommonController
         if(N["ringData"] != null){
             var ringData = N["ringData"].Value;  
             if(ringData=="outBoundIn"){
-                  anim.speed = 0.1f;
+                  anim.speed = 2.0f;
                   anim.Play("OutboundIn");
             }else if(ringData=="InboundOut"){
-                  anim.speed = 0.1f;
+                  anim.speed = 2.0f;
                   anim.Play("InboundOut");
             }else if(ringData=="Outbound"){
-                  anim.speed = 0.1f;
+                  anim.speed = 2.0f;
                   anim.Play("Outbound");
             }else if(ringData=="Inbound"){
-                  anim.speed = 0.1f;
+                  anim.speed = 2.0f;
                   anim.Play("Inbound");
             }
         }
