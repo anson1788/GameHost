@@ -649,6 +649,7 @@ MonoBehaviour:
   lpositionKey: lposition
   rpositionKey: rposition
   anim: {fileID: 1585270234}
+  centerText: {fileID: 236037384}
 --- !u!1001 &1585270232
 PrefabInstance:
   m_ObjectHideFlags: 0

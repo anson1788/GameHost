@@ -132,10 +132,11 @@ public class RingAnimationController : CommonController
 
     public void scaleAnimation( float position,float time){
 
-        Vector3 ringScale = ringHold.transform.localScale; 
+        Vector3 ringScale = bone.transform.localScale; 
         float scaleYCorrt = (position-1f)*0.15f/0.3f;
         getRingFrameAnimation().Stop(scaleKey);
         scale.ClearCurves();
+        Debug.Log("cc "+ ringScale.y);
         AnimationCurve    curveScaleX,curveScaleY,curveScaleZ;
         curveScaleX = AnimationCurve.Linear(0, 0, time, 0);
         curveScaleY = AnimationCurve.Linear(0, ringScale.y, time, position);
@@ -148,22 +149,22 @@ public class RingAnimationController : CommonController
         getBoneFrameAnimation().AddClip(scale, scaleKey);
         getBoneFrameAnimation().Play(scaleKey);
 
-
+         Vector3 Lpos = lBox.transform.position; 
         getLpositionFrameAnimation().Stop(lpositionKey);
         lposition.ClearCurves();
         AnimationCurve    curveLPosX;
-        curveLPosX = AnimationCurve.Linear(0, 1, time, position);
+        curveLPosX = AnimationCurve.Linear(0, Lpos.x, time, position);
         lposition.SetCurve("", typeof(Transform), "localPosition.x", curveLPosX);
         lposition.legacy=true;
         getLpositionFrameAnimation().RemoveClip(lpositionKey);
         getLpositionFrameAnimation().AddClip(lposition, lpositionKey);
         getLpositionFrameAnimation().Play(lpositionKey);
 
-
+        Vector3 Rpos = RBox.transform.position; 
         getRpositionFrameAnimation().Stop(rpositionKey);
         rposition.ClearCurves();
         AnimationCurve    curveRPosX;
-        curveRPosX = AnimationCurve.Linear(0, -1, time, -position);
+        curveRPosX = AnimationCurve.Linear(0, Rpos.x, time, -position);
         rposition.SetCurve("", typeof(Transform), "localPosition.x", curveRPosX);
         rposition.legacy=true;
         getRpositionFrameAnimation().RemoveClip(rpositionKey);
