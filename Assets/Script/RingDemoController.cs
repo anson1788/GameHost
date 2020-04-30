@@ -36,7 +36,14 @@ public class RingDemoController : RingAnimationController
         if (Input.GetKeyDown("space")){
             float zRotation = float.Parse("-10");
             zRotation = zRotation/2;
-            rotateAnimation(zRotation,0f,0f,0.3f);
+            rotateAnimation(35.5f,0f,0f,0.13f);
+           // rotateAnimation(zRotation,0f,0f,0.3f);
+        }
+        if (Input.GetKeyDown("a")){
+            float zRotation = float.Parse("-10");
+            zRotation = zRotation/2;
+            scaleAnimation();
+          
         }
     }
 
@@ -44,7 +51,7 @@ public class RingDemoController : RingAnimationController
     void onWebSocketReceiveData(string _data){
         JavaMessage(_data);
         var N = JSON.Parse(_data);
-        callLibFunction("printLogForUnity","get data " + _data);
+       // callLibFunction("printLogForUnity","get data " + _data);
         /*
         if(N["ringData"] != null){
             var ringData = N["ringData"].Value;  
@@ -62,6 +69,8 @@ public class RingDemoController : RingAnimationController
                   anim.Play("Inbound");
             }
         }*/
+
+        
         if(N["rollDataTime"] != null){
             /*
             var yawData = N["yawData"].Value;  
@@ -80,12 +89,28 @@ public class RingDemoController : RingAnimationController
     }
 
     void handleYawData(string _jsonData){
-        var JsonObj = JSON.Parse(_jsonData);
-        var yawData = JsonObj["yawData"].Value;  
+
+        var JsonObj = JSON.Parse(_jsonData); 
         var rollDataTime = JsonObj["rollDataTime"].Value;  
-        float zRotation = float.Parse(yawData);
         float time = float.Parse(rollDataTime);
+
+
+        var yawData = JsonObj["yawData"].Value;  
+        float yaw = float.Parse(yawData);
+
+        var pitchData = JsonObj["pitchData"].Value;  
+        float yPitch = float.Parse(pitchData);
+
+        /*
+        var pitchData = JsonObj["pitchData"].Value;  
+        float yPitch = float.Parse(pitchData);
+        */
         
-        rotateAnimation(zRotation,0f,0f,0.05f);
+        JavaMessage("yaw   "+ yaw);   
+        JavaMessage("time   "+ time);   
+
+
+        rotateAnimation(yaw,yPitch,0f,time);
+        //rotateAnimation(0f,0f,yPitch,time);
     }
 }
