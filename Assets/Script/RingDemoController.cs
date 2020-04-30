@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
+using UnityEngine.UI;
+
 public class RingDemoController : RingAnimationController
 {
 
     public Animator anim;
-
+    public Text centerText;
 
     /*
     Quaternion        resulting;
@@ -18,6 +20,7 @@ public class RingDemoController : RingAnimationController
     void Start()
     {
         initRingAnimation();
+        centerText.enabled = false;
     }
 
     // Update is called once per frame
@@ -42,8 +45,13 @@ public class RingDemoController : RingAnimationController
         if (Input.GetKeyDown("a")){
             float zRotation = float.Parse("-10");
             zRotation = zRotation/2;
-            scaleAnimation();
-          
+            scaleAnimation(1.2f,0.13f);
+        }
+
+        if (Input.GetKeyDown("b")){
+            float zRotation = float.Parse("-10");
+            zRotation = zRotation/2;
+            scaleAnimation(0.8f,0.13f);
         }
     }
 
@@ -69,7 +77,10 @@ public class RingDemoController : RingAnimationController
                   anim.Play("Inbound");
             }
         }*/
+        
+        if(N["isCalibrating"]!=null){
 
+        }
         
         if(N["rollDataTime"] != null){
             /*
