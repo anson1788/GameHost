@@ -78,8 +78,12 @@ public class RingDemoController : RingAnimationController
             }
         }*/
         
-        if(N["isCalibrating"]!=null){
-
+        if(N["calibratingFlag"]!=null){
+            var calibratingFlag = N["calibratingFlag"].Value;  
+            centerText.enabled = false;
+            if(calibratingFlag.Trim().Equals("true")){
+                centerText.enabled = true;
+            }
         }
         
         if(N["rollDataTime"] != null){
@@ -96,6 +100,11 @@ public class RingDemoController : RingAnimationController
             Animate(beginning, resulting);
             */
             handleYawData(_data);
+        }
+
+
+        if(N["flexPercentage"] != null){
+            handleFlex(_data);
         }
     }
 
@@ -123,5 +132,14 @@ public class RingDemoController : RingAnimationController
 
         rotateAnimation(yaw,yPitch,0f,time);
         //rotateAnimation(0f,0f,yPitch,time);
+    }
+
+    void handleFlex(string _jsonData){
+        var JsonObj = JSON.Parse(_jsonData); 
+        var flexPercentage = JsonObj["flexPercentage"].Value;  
+        float flexPercentageFloat = float.Parse(flexPercentage);
+        var flexTime = JsonObj["flexDataTime"].Value;  
+        float flexTimeFloat = float.Parse(flexTime);
+        scaleAnimation(flexPercentageFloat,flexTimeFloat);
     }
 }
