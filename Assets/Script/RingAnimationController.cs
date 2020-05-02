@@ -112,7 +112,7 @@ public class RingAnimationController : CommonController
         ringHold.transform.rotation = crtTransform;
         */
         Quaternion crtTransform = ringHold.transform.rotation; 
-        Quaternion target =  Quaternion.Euler(0, yaw, pitch);
+        Quaternion target =  Quaternion.Euler(roll, yaw, pitch);
         float animationSpeed = _speed;
         AnimationCurve    curve_x,curve_y,curve_z,curve_w;
         curve_x = AnimationCurve.Linear(0, crtTransform.x, animationSpeed, target.x);

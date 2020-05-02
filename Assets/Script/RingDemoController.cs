@@ -86,20 +86,8 @@ public class RingDemoController : RingAnimationController
             }
         }
         
-        if(N["rollDataTime"] != null){
-            /*
-            var yawData = N["yawData"].Value;  
-            JavaMessage("yawData : " + yawData);
-            float zRotation = float.Parse(yawData);
-            zRotation = zRotation/2;
-            ring.GetComponent<Animation>().Stop("rotate");
-            beginning = ring.transform.rotation;        
-            ring.transform.Rotate(0, zRotation, 0, Space.World);
-            resulting = ring.transform.rotation;
-            ring.transform.rotation = beginning;
-            Animate(beginning, resulting);
-            */
-            handleYawData(_data);
+        if(N["mpuDataTime"] != null){
+            handleMPUData(_data);
         }
 
 
@@ -108,29 +96,34 @@ public class RingDemoController : RingAnimationController
         }
     }
 
-    void handleYawData(string _jsonData){
+    void handleMPUData(string _jsonData){
 
         var JsonObj = JSON.Parse(_jsonData); 
-        var rollDataTime = JsonObj["rollDataTime"].Value;  
-        float time = float.Parse(rollDataTime);
+        var mpuDataTime = JsonObj["mpuDataTime"].Value;  
+        float time = float.Parse(mpuDataTime);
 
 
         var yawData = JsonObj["yawData"].Value;  
-        float yaw = float.Parse(yawData);
+        float yawAngle = float.Parse(yawData);
 
         var pitchData = JsonObj["pitchData"].Value;  
-        float yPitch = float.Parse(pitchData);
+        float pitchAngle = float.Parse(pitchData);
+
+        var rollData = JsonObj["rollData"].Value;  
+        float rollAngle = float.Parse(rollData);
 
         /*
         var pitchData = JsonObj["pitchData"].Value;  
         float yPitch = float.Parse(pitchData);
         */
         
-        JavaMessage("yaw   "+ yaw);   
+        JavaMessage("yaw   "+ yawAngle);   
+        JavaMessage("pitch   "+ pitchAngle);   
+        JavaMessage("roll   "+ rollAngle);           
         JavaMessage("time   "+ time);   
 
 
-        rotateAnimation(yaw,yPitch,0f,time);
+        rotateAnimation(yawAngle,pitchAngle,rollAngle,time);
         //rotateAnimation(0f,0f,yPitch,time);
     }
 
