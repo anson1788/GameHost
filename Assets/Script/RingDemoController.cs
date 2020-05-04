@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
 using UnityEngine.UI;
+using System;
 
 public class RingDemoController : RingAnimationController
 {
@@ -21,12 +22,28 @@ public class RingDemoController : RingAnimationController
     {
         initRingAnimation();
         centerText.enabled = false;
+        currentDate = 0;
     }
 
+    float isSmall = 1.04f;
+    float currentDate;
     // Update is called once per frame
     void Update()
     {
-    
+        if (Application.platform != RuntimePlatform.Android){
+            currentDate += Time.deltaTime * 1000;
+            if(currentDate>900){
+                currentDate = 0;
+              //  rotateAnimation(0f,0F,-50f,0.13f);
+                if(isSmall==1.04){
+                    isSmall = 1.05f;
+                }else{
+                    isSmall = 1.04f;
+                }
+               // scaleAnimation(isSmall,0.13f);
+            }
+        }
+
         /*
        foreach(Touch touch in Input.touches)
         {
@@ -37,10 +54,7 @@ public class RingDemoController : RingAnimationController
             }
         }*/
         if (Input.GetKeyDown("space")){
-            float zRotation = float.Parse("-10");
-            zRotation = zRotation/2;
-            rotateAnimation(35.5f,0f,0f,0.13f);
-           // rotateAnimation(zRotation,0f,0f,0.3f);
+            rotateAnimation(0f,0f,0f,0.3f);
         }
         if (Input.GetKeyDown("a")){
             float zRotation = float.Parse("-10");
@@ -54,6 +68,8 @@ public class RingDemoController : RingAnimationController
             scaleAnimation(0.8f,0.13f);
         }
     }
+
+
 
 
     void onWebSocketReceiveData(string _data){

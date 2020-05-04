@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
+using System;
+
 public class RingAnimationController : CommonController
 {
 
@@ -112,7 +114,8 @@ public class RingAnimationController : CommonController
         ringHold.transform.rotation = crtTransform;
         */
         Quaternion crtTransform = ringHold.transform.rotation; 
-        Quaternion target =  Quaternion.Euler(roll, yaw, pitch);
+        
+        Quaternion target =  Quaternion.Euler(roll, yaw, -pitch);
         float animationSpeed = _speed;
         AnimationCurve    curve_x,curve_y,curve_z,curve_w;
         curve_x = AnimationCurve.Linear(0, crtTransform.x, animationSpeed, target.x);
@@ -136,9 +139,8 @@ public class RingAnimationController : CommonController
         float scaleYCorrt = (position-1f)*0.15f/0.3f;
         getRingFrameAnimation().Stop(scaleKey);
         scale.ClearCurves();
-        Debug.Log("cc "+ ringScale.y);
         AnimationCurve    curveScaleX,curveScaleY,curveScaleZ;
-        curveScaleX = AnimationCurve.Linear(0, 0, time, 0);
+        curveScaleX = AnimationCurve.Linear(0, 1, time, 1);
         curveScaleY = AnimationCurve.Linear(0, ringScale.y, time, position);
         curveScaleZ = AnimationCurve.Linear(0, ringScale.z, time, 1-scaleYCorrt);
         scale.SetCurve("", typeof(Transform), "localScale.x", curveScaleX);
@@ -149,7 +151,9 @@ public class RingAnimationController : CommonController
         getBoneFrameAnimation().AddClip(scale, scaleKey);
         getBoneFrameAnimation().Play(scaleKey);
 
-         Vector3 Lpos = lBox.transform.position; 
+       // position = ((position-1f)/2)+1;
+
+        Vector3 Lpos = lBox.transform.localPosition; 
         getLpositionFrameAnimation().Stop(lpositionKey);
         lposition.ClearCurves();
         AnimationCurve    curveLPosX;
@@ -160,7 +164,7 @@ public class RingAnimationController : CommonController
         getLpositionFrameAnimation().AddClip(lposition, lpositionKey);
         getLpositionFrameAnimation().Play(lpositionKey);
 
-        Vector3 Rpos = RBox.transform.position; 
+        Vector3 Rpos = RBox.transform.localPosition; 
         getRpositionFrameAnimation().Stop(rpositionKey);
         rposition.ClearCurves();
         AnimationCurve    curveRPosX;
