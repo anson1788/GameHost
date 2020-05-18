@@ -1,27 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 public class CommonController : MonoBehaviour
 {
+
+    public enum ConnectionMode {WifiMode,BLEMode};
+    public static ConnectionMode mConnectionMode = ConnectionMode.WifiMode;
     // Start is called before the first frame update
     void Start()
     {
         
     }
+    
+
 
     // Update is called once per frame
     void Update()
     {
         
     }
+    
+    void BLEScanStop(string _data){
+         JavaMessage("Stop ble");   
+    }
+
+    void BLEScanStart(string _data){
+         JavaMessage("Start ble");   
+    }
+
+     void displayCalibration(string _data){
+         JavaMessage("display calibration");   
+    }
 
     protected void JavaMessage(string _str){
         callLibFunction("printLogForUnity",_str);
     }
+
     protected void callLibFunction(string funcName, string data){
-        AndroidJavaClass unity = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
         AndroidJavaClass cSocketHelper = new AndroidJavaClass("com.example.gamehostlib.cSocketHelper");
         cSocketHelper.CallStatic(funcName,data);
     }
+
+      
+    
+
 }

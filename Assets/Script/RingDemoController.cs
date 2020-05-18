@@ -21,8 +21,16 @@ public class RingDemoController : RingAnimationController
     void Start()
     {
         initRingAnimation();
-        centerText.enabled = false;
+        centerText.enabled = true;
+        centerText.text = "Please put your ring vertical and wait for Calibration";
         currentDate = 0;
+        StartCoroutine(requestCalibration());
+    }
+
+    
+    IEnumerator requestCalibration() {
+        yield return new WaitForSeconds(2.0f);
+        callLibFunction("TriggerCalibration","");
     }
 
     float isSmall = 1.04f;

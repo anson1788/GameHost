@@ -10,6 +10,8 @@ public class EntryMainCameraController : CommonController
 
     // Start is called before the first frame update
     public Text centerText;
+    public Rect buttonRect;
+
     void Start()
     {
         startConnectToSocket();
@@ -52,6 +54,10 @@ public class EntryMainCameraController : CommonController
         StartCoroutine(LoadSceneAsync());
     }
 
+    void displayCalibration(string _data){
+         JavaMessage("display calibration");   
+         goToNextScene();
+    }
     IEnumerator LoadSceneAsync()
     {
         // The Application loads the Scene in the background as the current Scene runs.
@@ -64,5 +70,23 @@ public class EntryMainCameraController : CommonController
         {
             yield return null;
         }
+    }
+
+     void OnGUI () {
+        // Fixed Layout
+        float buttonWidth = Screen.width/5.0f;
+        float buttonHeight = Screen.height/5.0f;
+         GUIStyle customButton = new GUIStyle("button");
+        customButton.fontSize = 35;
+        buttonRect =new Rect (25,25,buttonWidth,buttonHeight);
+        if(GUI.Button (buttonRect, "Scan and Connect Device",customButton)){
+            SwitchBLEMode();
+        }
+    }
+
+    void SwitchBLEMode(){
+            JavaMessage(" button click");   
+            callLibFunction("TriggerBle","");
+            CommonController.mConnectionMode = ConnectionMode.BLEMode;
     }
 }
