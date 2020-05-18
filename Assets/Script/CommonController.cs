@@ -33,6 +33,14 @@ public class CommonController : MonoBehaviour
          JavaMessage("display calibration");   
     }
 
+    void StartCalibration(string _data){
+
+    }
+
+
+    void StopCalibration(string _data){
+    }
+    
     protected void JavaMessage(string _str){
         callLibFunction("printLogForUnity",_str);
     }
