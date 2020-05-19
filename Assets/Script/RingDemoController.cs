@@ -33,7 +33,7 @@ public class RingDemoController : RingAnimationController
 
 
     IEnumerator requestCalibration() {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.5f);
         callLibFunction("TriggerCalibration","");
     }
 
@@ -49,7 +49,7 @@ public class RingDemoController : RingAnimationController
             rotateAnimation(mMotionObj.mYaw,mMotionObj.mPitch,mMotionObj.mRotation,mMotionObj.mTime);
         }
         scaleAnimation(mMotionObj.mScaleVal,mMotionObj.mTime);
-        yield return new WaitForSeconds(0.06f);
+        yield return new WaitForSeconds(0.09f);
         triggerAnimationLoop();
     }
 
@@ -79,7 +79,7 @@ public class RingDemoController : RingAnimationController
             isAnimationLoopStart = true;
             triggerAnimationLoop();
         }
-        
+       // scaleAnimation(mMotionObj.mScaleVal,mMotionObj.mTime);
         if (Application.platform != RuntimePlatform.Android){
             currentDate += Time.deltaTime * 1000;
             if(currentDate>900){
@@ -102,7 +102,7 @@ public class RingDemoController : RingAnimationController
             }
         }*/
         if (Input.GetKeyDown("space")){
-            rotateAnimation(0f,0f,0f,0.3f);
+            rotateAnimation(0f,0f,20f,0.3f);
         }
         if (Input.GetKeyDown("a")){
             float zRotation = float.Parse("-10");
@@ -131,7 +131,7 @@ public class RingDemoController : RingAnimationController
             }
         }
         
-        if(N["mpuDataTime"] != null){
+        if(N["yawData"] != null){
             handleMPUData(_data);
         }
 
@@ -144,9 +144,10 @@ public class RingDemoController : RingAnimationController
     void handleMPUData(string _jsonData){
 
         var JsonObj = JSON.Parse(_jsonData); 
+        /*
         var mpuDataTime = JsonObj["mpuDataTime"].Value;  
         float time = float.Parse(mpuDataTime);
-
+        */
 
         var yawData = JsonObj["yawData"].Value;  
         float yawAngle = float.Parse(yawData);
@@ -156,16 +157,10 @@ public class RingDemoController : RingAnimationController
 
         var rollData = JsonObj["rollData"].Value;  
         float rollAngle = float.Parse(rollData);
-
-        /*
-        var pitchData = JsonObj["pitchData"].Value;  
-        float yPitch = float.Parse(pitchData);
-        */
         
         JavaMessage("yaw   "+ yawAngle);   
         JavaMessage("pitch   "+ pitchAngle);   
         JavaMessage("roll   "+ rollAngle);           
-        JavaMessage("time   "+ time);   
         
         mMotionObj.mYaw = yawAngle;
         mMotionObj.mPitch = pitchAngle;
@@ -179,8 +174,10 @@ public class RingDemoController : RingAnimationController
         var JsonObj = JSON.Parse(_jsonData); 
         var flexPercentage = JsonObj["flexPercentage"].Value;  
         float flexPercentageFloat = float.Parse(flexPercentage);
+        /*
         var flexTime = JsonObj["flexDataTime"].Value;  
         float flexTimeFloat = float.Parse(flexTime);
+        */
         mMotionObj.mScaleVal = flexPercentageFloat;
         //scaleAnimation(flexPercentageFloat,flexTimeFloat);
     }

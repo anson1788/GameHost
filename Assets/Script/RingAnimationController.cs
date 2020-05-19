@@ -135,10 +135,18 @@ public class RingAnimationController : CommonController
     }
 
     public void scaleAnimation( float position,float time){
-
-      
+        /*
         Vector3 ringScale = bone.transform.localScale; 
-        //Quaternion crtTransform = bone.transform.rotation; 
+        float scaleYCorrt = (position-1f)*0.15f/0.3f;
+        bone.transform.localScale = new Vector3(1f,position,1-scaleYCorrt);
+        
+        Vector3 Lpos = lBox.transform.localPosition; 
+        lBox.transform.localPosition = new Vector3(position,Lpos.y,Lpos.z);
+        Vector3 Rpos = RBox.transform.localPosition; 
+        RBox.transform.localPosition = new Vector3(-position,Rpos.y,Rpos.z);
+        */
+        
+        Vector3 ringScale = bone.transform.localScale; 
         float scaleYCorrt = (position-1f)*0.15f/0.3f;
         getRingFrameAnimation().Stop(scaleKey);
         scale.ClearCurves();
@@ -174,6 +182,6 @@ public class RingAnimationController : CommonController
         getRpositionFrameAnimation().RemoveClip(rpositionKey);
         getRpositionFrameAnimation().AddClip(rposition, rpositionKey);
         getRpositionFrameAnimation().Play(rpositionKey);
-        
+                
     }
 }
