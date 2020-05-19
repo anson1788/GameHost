@@ -11,6 +11,7 @@ public class RingDemoController : RingAnimationController
     public Animator anim;
     public Text centerText;
 
+    public MotionObject mMotionObj = new MotionObject();
     /*
     Quaternion        resulting;
     Quaternion        beginning;
@@ -24,31 +25,70 @@ public class RingDemoController : RingAnimationController
         centerText.enabled = true;
         centerText.text = "Please put your ring vertical and wait for Calibration";
         currentDate = 0;
+
         StartCoroutine(requestCalibration());
-    }
 
     
+    }
+
+
     IEnumerator requestCalibration() {
         yield return new WaitForSeconds(1.0f);
         callLibFunction("TriggerCalibration","");
     }
 
+
+    public void triggerAnimationLoop(){
+       // JavaMessage("Animation Background loop");
+        StartCoroutine(performRegularAnimation());
+    }
+
+
+    IEnumerator performRegularAnimation() {
+        if(calibrationReady){
+            rotateAnimation(mMotionObj.mYaw,mMotionObj.mPitch,mMotionObj.mRotation,mMotionObj.mTime);
+        }
+        scaleAnimation(mMotionObj.mScaleVal,mMotionObj.mTime);
+        yield return new WaitForSeconds(0.06f);
+        triggerAnimationLoop();
+    }
+
+
+    public bool calibrationReady =false;
+    void StartCalibration(string _data){
+        centerText.enabled = true;
+        centerText.text = "Calibrating";
+        calibrationReady = false;
+    }
+
+
+    void StopCalibration(string _data){
+        centerText.enabled = false;
+        centerText.text = "Gaming";
+        calibrationReady = true;
+    }
+    
+
     float isSmall = 1.04f;
     float currentDate;
+    bool isAnimationLoopStart = false ;
     // Update is called once per frame
     void Update()
     {
+        if(isAnimationLoopStart==false){
+            isAnimationLoopStart = true;
+            triggerAnimationLoop();
+        }
+        
         if (Application.platform != RuntimePlatform.Android){
             currentDate += Time.deltaTime * 1000;
             if(currentDate>900){
                 currentDate = 0;
-              //  rotateAnimation(0f,0F,-50f,0.13f);
                 if(isSmall==1.04){
                     isSmall = 1.05f;
                 }else{
                     isSmall = 1.04f;
                 }
-               // scaleAnimation(isSmall,0.13f);
             }
         }
 
@@ -83,25 +123,6 @@ public class RingDemoController : RingAnimationController
     void onWebSocketReceiveData(string _data){
         JavaMessage(_data);
         var N = JSON.Parse(_data);
-       // callLibFunction("printLogForUnity","get data " + _data);
-        /*
-        if(N["ringData"] != null){
-            var ringData = N["ringData"].Value;  
-            if(ringData=="outBoundIn"){
-                  anim.speed = 2.0f;
-                  anim.Play("OutboundIn");
-            }else if(ringData=="InboundOut"){
-                  anim.speed = 2.0f;
-                  anim.Play("InboundOut");
-            }else if(ringData=="Outbound"){
-                  anim.speed = 2.0f;
-                  anim.Play("Outbound");
-            }else if(ringData=="Inbound"){
-                  anim.speed = 2.0f;
-                  anim.Play("Inbound");
-            }
-        }*/
-        
         if(N["calibratingFlag"]!=null){
             var calibratingFlag = N["calibratingFlag"].Value;  
             centerText.enabled = false;
@@ -145,10 +166,13 @@ public class RingDemoController : RingAnimationController
         JavaMessage("pitch   "+ pitchAngle);   
         JavaMessage("roll   "+ rollAngle);           
         JavaMessage("time   "+ time);   
+        
+        mMotionObj.mYaw = yawAngle;
+        mMotionObj.mPitch = pitchAngle;
+        mMotionObj.mRotation = rollAngle;
 
-
-        rotateAnimation(yawAngle,pitchAngle,rollAngle,time);
-        //rotateAnimation(0f,0f,yPitch,time);
+        //rotateAnimation(yawAngle,pitchAngle,rollAngle,time);
+       
     }
 
     void handleFlex(string _jsonData){
@@ -157,6 +181,9 @@ public class RingDemoController : RingAnimationController
         float flexPercentageFloat = float.Parse(flexPercentage);
         var flexTime = JsonObj["flexDataTime"].Value;  
         float flexTimeFloat = float.Parse(flexTime);
-        scaleAnimation(flexPercentageFloat,flexTimeFloat);
+        mMotionObj.mScaleVal = flexPercentageFloat;
+        //scaleAnimation(flexPercentageFloat,flexTimeFloat);
     }
+
+
 }
