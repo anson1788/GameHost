@@ -192,6 +192,8 @@ MonoBehaviour:
   - {fileID: 1979546812}
   - {fileID: 379965974}
   - {fileID: 1626272852}
+  yawValText: {fileID: 513205156}
+  yawVal: 0
 --- !u!114 &51811649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63971,6 +63973,8 @@ MonoBehaviour:
   - {r: 0.8078432, g: 0.5019608, b: 1, a: 1}
   countDownCanvas: {fileID: 1692157109}
   countDownText: {fileID: 1721315268}
+  yawValText: {fileID: 513205156}
+  yawVal: 0
 --- !u!4 &1671217930
 Transform:
   m_ObjectHideFlags: 0
@@ -63997,7 +64001,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.6
+  m_Volume: 0.39
   m_Pitch: 1
   Loop: 0
   Mute: 0
