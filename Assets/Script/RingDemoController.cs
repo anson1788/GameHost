@@ -8,9 +8,15 @@ using System;
 public class RingDemoController : RingAnimationController
 {
 
-    public Animator anim;
     public Text centerText;
+    public GameObject ringText;
 
+    public GameObject[] mGameObj;
+    public GameObject ringHolder;
+
+    public GameObject conductor;
+
+    public GameObject PlayerInputUI;
     public MotionObject mMotionObj = new MotionObject();
     /*
     Quaternion        resulting;
@@ -25,12 +31,23 @@ public class RingDemoController : RingAnimationController
         centerText.enabled = true;
         centerText.text = "Please put your ring vertical and wait for Calibration";
         currentDate = 0;
+        for(int i = 0; i < mGameObj.Length; i++){
+            mGameObj[i].SetActive(false);
+        }
 
         StartCoroutine(requestCalibration());
-
-    
+       
     }
 
+
+    void startGame(){
+        for(int i = 0; i < mGameObj.Length; i++){
+            mGameObj[i].SetActive(true);
+        }
+        ringText.SetActive(false);
+        ringHolder.SetActive(false);
+        conductor.GetComponent<Conductor>().makeGameActive();
+    }
 
     IEnumerator requestCalibration() {
         yield return new WaitForSeconds(1.5f);
@@ -49,7 +66,7 @@ public class RingDemoController : RingAnimationController
             rotateAnimation(mMotionObj.mYaw,mMotionObj.mPitch,mMotionObj.mRotation,mMotionObj.mTime);
         }
         scaleAnimation(mMotionObj.mScaleVal,mMotionObj.mTime);
-        yield return new WaitForSeconds(0.09f);
+        yield return new WaitForSeconds(0.06f);
         triggerAnimationLoop();
     }
 
@@ -66,6 +83,7 @@ public class RingDemoController : RingAnimationController
         centerText.enabled = false;
         centerText.text = "Gaming";
         calibrationReady = true;
+        startGame();
     }
     
 
@@ -92,17 +110,9 @@ public class RingDemoController : RingAnimationController
             }
         }
 
-        /*
-       foreach(Touch touch in Input.touches)
-        {
-            if (touch.phase == TouchPhase.Began)
-            {
-                  anim.speed = 2.0f;
-                  anim.Play("OutboundIn");
-            }
-        }*/
         if (Input.GetKeyDown("space")){
-            rotateAnimation(0f,0f,20f,0.3f);
+            //rotateAnimation(0f,0f,20f,0.3f);
+            StopCalibration("");
         }
         if (Input.GetKeyDown("a")){
             float zRotation = float.Parse("-10");
@@ -166,7 +176,7 @@ public class RingDemoController : RingAnimationController
         mMotionObj.mPitch = pitchAngle;
         mMotionObj.mRotation = rollAngle;
 
-        //rotateAnimation(yawAngle,pitchAngle,rollAngle,time);
+        PlayerInputUI.GetComponent<PlayerInputControl>().updateYawVal(yawAngle);
        
     }
 
@@ -179,6 +189,9 @@ public class RingDemoController : RingAnimationController
         float flexTimeFloat = float.Parse(flexTime);
         */
         mMotionObj.mScaleVal = flexPercentageFloat;
+        if(flexPercentageFloat<0.75){
+         PlayerInputUI.GetComponent<PlayerInputControl>().spacePause();  
+        }
         //scaleAnimation(flexPercentageFloat,flexTimeFloat);
     }
 

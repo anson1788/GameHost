@@ -65,7 +65,7 @@ public class EntryMainCameraController : CommonController
         // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
         // a sceneBuildIndex of 1 as shown in Build Settings.
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("RingDemoScene");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Playing");
         while (!asyncLoad.isDone)
         {
             yield return null;

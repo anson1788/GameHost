@@ -69,6 +69,9 @@ public class Conductor : MonoBehaviour
 	public GameObject countDownCanvas;
 	public Text countDownText;
 
+	public Text yawValText;
+
+	public float yawVal;
 
 	//layer each music node, so that the first one would be at the front
 	private const float LayerOffsetZ = 0.001f;
@@ -149,7 +152,7 @@ public class Conductor : MonoBehaviour
 		#endif
 
 		//display countdown canvas
-		countDownCanvas.SetActive(true);
+		countDownCanvas.SetActive(false);
 
 		//get the song info from messenger
 		songInfo = SongInfoMessenger.Instance.currentSong;
@@ -181,7 +184,10 @@ public class Conductor : MonoBehaviour
 		//initialize audioSource
 		audioSource.clip = songInfo.song;
 
-		//start countdown
+	}
+
+	public void makeGameActive(){
+		countDownCanvas.SetActive(true);
 		StartCoroutine(CountDown());
 	}
 

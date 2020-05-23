@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using UnityEngine.UI;
 public class PlayerInputControl : MonoBehaviour 
 {
 
@@ -41,6 +41,12 @@ public class PlayerInputControl : MonoBehaviour
     public TextMesh[] tappingKeyMesh;
 
     private int CrtHighLightIdx = 0;
+
+    
+	public Text yawValText;
+
+	public float yawVal = -999;
+
     void Start()
     {
         if(songInfoMessengerPrefab!=null){
@@ -89,9 +95,11 @@ public class PlayerInputControl : MonoBehaviour
         updateHighlightSection(0);
 
     }
-
-    void updateHighlightSection(int idx){
-       
+    
+    public void updateYawVal(float val){
+        yawVal = val;
+    }
+    public void updateHighlightSection(int idx){
         CrtHighLightIdx = idx;
            for (int i = 0; i < tappingSprite.Length; i++){
                 tappingSprite[i].color = Color.grey;
@@ -125,11 +133,14 @@ public class PlayerInputControl : MonoBehaviour
     }
     #endif
     
+    public void spacePause(){
+         Inputted(CrtHighLightIdx);
+    }
 
     void Update()
     {
         if (Conductor.paused) return;
-
+        yawValText.text = "yawVal : "+yawVal.ToString();
         //keyboard input
         #if UNITY_EDITOR || UNITY_STANDALONE
 
@@ -161,7 +172,13 @@ public class PlayerInputControl : MonoBehaviour
         }
 
         #endif
-
+        if(yawVal>50){
+            updateHighlightSection(2);
+        }else if(yawVal<-50){
+            updateHighlightSection(1);
+        }else {
+            updateHighlightSection(0);
+        }
         //touch input
         #if UNITY_IOS || UNITY_ANDROID || UNITY_EDITOR
 
