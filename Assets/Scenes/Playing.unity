@@ -35953,7 +35953,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
+  serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
@@ -62720,7 +62720,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1367079886
 Transform:
   m_ObjectHideFlags: 0
@@ -76053,6 +76053,8 @@ MonoBehaviour:
   - {fileID: 1463421916}
   - {fileID: 523016182}
   - {fileID: 905033947}
+  - {fileID: 905033947}
+  - {fileID: 933996727}
   ringHolder: {fileID: 1367079885}
   conductor: {fileID: 1671217928}
   PlayerInputUI: {fileID: 51811646}

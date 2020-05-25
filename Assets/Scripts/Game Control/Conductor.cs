@@ -247,7 +247,7 @@ public class Conductor : MonoBehaviour
 		if (nextIndex < currTrack.notes.Length && currTrack.notes[nextIndex].note < beatToShow)	{
 				SongInfo.Note currNote = currTrack.notes[nextIndex];
 
-				if(currNote.note-lastNote>1){
+				if(currNote.note-lastNote>2){
 					//set z position
 					float layerZ = nextLayerZ[nodeDisplayIdx];
 					nextLayerZ[nodeDisplayIdx] += LayerOffsetZ;

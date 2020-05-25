@@ -36,21 +36,26 @@ public class RingDemoController : RingAnimationController
         }
 
         StartCoroutine(requestCalibration());
-       
+       Application.targetFrameRate = 30;
     }
 
 
     void startGame(){
+        /* 
         for(int i = 0; i < mGameObj.Length; i++){
             mGameObj[i].SetActive(true);
-        }
+        }*/
         ringText.SetActive(false);
         ringHolder.SetActive(false);
+        mGameObj[mGameObj.Length-1].SetActive(true);
+        mGameObj[3].SetActive(true);
+        mGameObj[4].SetActive(true);
+        mGameObj[5].SetActive(true);
         conductor.GetComponent<Conductor>().makeGameActive();
     }
 
     IEnumerator requestCalibration() {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.2f);
         callLibFunction("TriggerCalibration","");
     }
 

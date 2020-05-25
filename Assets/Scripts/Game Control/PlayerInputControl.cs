@@ -40,7 +40,7 @@ public class PlayerInputControl : MonoBehaviour
     public SpriteRenderer[] tappingSprite;
     public TextMesh[] tappingKeyMesh;
 
-    private int CrtHighLightIdx = 0;
+    private int CrtHighLightIdx = -999;
 
     
 	public Text yawValText;
@@ -100,13 +100,15 @@ public class PlayerInputControl : MonoBehaviour
         yawVal = val;
     }
     public void updateHighlightSection(int idx){
-        CrtHighLightIdx = idx;
+        if(CrtHighLightIdx!=idx){
+            CrtHighLightIdx = idx;
            for (int i = 0; i < tappingSprite.Length; i++){
                 tappingSprite[i].color = Color.grey;
                 tappingKeyMesh[i].color = Color.grey;
            }
            tappingSprite[idx].color = Color.white;
            tappingKeyMesh[idx].color = Color.white;
+        }
     }
 
     #if UNITY_EDITOR || UNITY_STANDALONE
