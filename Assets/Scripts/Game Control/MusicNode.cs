@@ -55,7 +55,8 @@ public class MusicNode : MonoBehaviour
 
 		if (paused) return; //multi-times notes might be paused on the finish line
 
-		transform.position = new Vector3(transform.position.x, startY + (endY - startY) * (1f - (beat - Conductor.songposition / Conductor.crotchet) / Conductor.BeatsShownOnScreen), transform.position.z);
+		float y = startY + (endY - startY) * (1f - (beat - Conductor.songposition / Conductor.crotchet) / Conductor.BeatsShownOnScreen);
+		transform.position = new Vector3(transform.position.x, y , transform.position.z);
 	
 		//remove itself when out of the screen (remove line)
 		if (transform.position.y < removeLineY)
