@@ -195,7 +195,7 @@ public class RingDemoController : RingAnimationController
         */
         mMotionObj.mScaleVal = flexPercentageFloat;
         if(flexPercentageFloat<0.75){
-         PlayerInputUI.GetComponent<PlayerInputControl>().spacePause();  
+            PlayerInputUI.GetComponent<PlayerInputControl>().spacePause();  
         }
         //scaleAnimation(flexPercentageFloat,flexTimeFloat);
     }

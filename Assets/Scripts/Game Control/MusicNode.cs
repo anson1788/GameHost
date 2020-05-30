@@ -14,6 +14,8 @@ public class MusicNode : MonoBehaviour
 	[NonSerialized] public int times;
 	[NonSerialized] public bool paused;
 
+
+
 	public void Initialize(float posX, float startY, float endY, float removeLineY, float posZ, float targetBeat, int times, Color color)
 	{
 		this.startY = startY;
@@ -54,10 +56,20 @@ public class MusicNode : MonoBehaviour
 		if (Conductor.pauseTimeStamp > 0f) return; //resume not managed
 
 		if (paused) return; //multi-times notes might be paused on the finish line
-
+		
 		float y = startY + (endY - startY) * (1f - (beat - Conductor.songposition / Conductor.crotchet) / Conductor.BeatsShownOnScreen);
 		transform.position = new Vector3(transform.position.x, y , transform.position.z);
-	
+		
+
+		/*
+		float y = startY + (endY - startY) * (1f - (beat - Conductor.songposition / Conductor.crotchet) / Conductor.BeatsShownOnScreen);
+		Vector3 destination = new Vector3(transform.position.x, endY , transform.position.z);
+		float delta = transform.position.y-y;
+		Vector3 currentPosition = transform.position;
+		Vector3 nextPosition = Vector3.MoveTowards (currentPosition, destination, delta);
+		transform.position = nextPosition;
+		*/
+
 		//remove itself when out of the screen (remove line)
 		if (transform.position.y < removeLineY)
 		{
