@@ -180,7 +180,7 @@ MonoBehaviour:
   - {fileID: 163558438}
   - {fileID: 893558537}
   songCollections:
-  - {fileID: 11400000, guid: 8a52beec742464e618a8f0f409844446, type: 2}
+  - {fileID: 11400000, guid: 32a5d8362b509b8419dd3904758e81f1, type: 2}
   songInfoMessengerPrefab: {fileID: 695754301}
   tappingSprite:
   - {fileID: 1896660657}
@@ -30149,7 +30149,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1609220929138244, guid: 19f37d57509bf41dbb9ddb283da97463, type: 3}
       propertyPath: m_Name
-      value: Song Info Messenger0
+      value: Song Info Messenger
       objectReference: {fileID: 0}
     - target: {fileID: 4564817299671344, guid: 19f37d57509bf41dbb9ddb283da97463, type: 3}
       propertyPath: m_LocalPosition.x
