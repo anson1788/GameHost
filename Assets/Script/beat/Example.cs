@@ -48,7 +48,7 @@ public class Example : MonoBehaviour
 			ValString  +=idx+",";
 			Debug.Log(ValString);
 		}
-        yield return new WaitForSeconds(60f/155f);
+        yield return new WaitForSeconds(60f/(155f*2f));
 		StartMonitor();
     }
 
