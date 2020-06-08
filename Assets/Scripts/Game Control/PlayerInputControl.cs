@@ -44,9 +44,10 @@ public class PlayerInputControl : MonoBehaviour
 
     
 	public Text yawValText;
+    
+    public float yawVal = 0;
 
-	public float yawVal = -999;
-
+    public int currentHitPos = -999;
     void Start()
     {
         if(songInfoMessengerPrefab!=null){
@@ -98,16 +99,26 @@ public class PlayerInputControl : MonoBehaviour
     
     public void updateYawVal(float val){
         yawVal = val;
+        if(val>50){
+            updateHighlightSection(2);
+        }else if(val<-50){
+            updateHighlightSection(1);
+        }else {
+            updateHighlightSection(0);
+        }
     }
     public void updateHighlightSection(int idx){
-        if(CrtHighLightIdx!=idx){
-            CrtHighLightIdx = idx;
-           for (int i = 0; i < tappingSprite.Length; i++){
-                tappingSprite[i].color = Color.grey;
-                tappingKeyMesh[i].color = Color.grey;
-           }
-           tappingSprite[idx].color = Color.white;
-           tappingKeyMesh[idx].color = Color.white;
+        if(currentHitPos!=idx){
+            currentHitPos = idx;
+            if(CrtHighLightIdx!=idx){
+                CrtHighLightIdx = idx;
+            for (int i = 0; i < tappingSprite.Length; i++){
+                    tappingSprite[i].color = Color.grey;
+                    tappingKeyMesh[i].color = Color.grey;
+            }
+            tappingSprite[idx].color = Color.white;
+            tappingKeyMesh[idx].color = Color.white;
+            }
         }
     }
 
@@ -135,7 +146,7 @@ public class PlayerInputControl : MonoBehaviour
     }
     #endif
     
-    public void spacePause(){
+    public void spacePress(){
          Inputted(CrtHighLightIdx);
     }
 
@@ -174,13 +185,7 @@ public class PlayerInputControl : MonoBehaviour
         }
 
         #endif
-        if(yawVal>50){
-            updateHighlightSection(2);
-        }else if(yawVal<-50){
-            updateHighlightSection(1);
-        }else {
-            updateHighlightSection(0);
-        }
+        
         //touch input
         #if UNITY_IOS || UNITY_ANDROID || UNITY_EDITOR
 

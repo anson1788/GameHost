@@ -194,6 +194,7 @@ MonoBehaviour:
   - {fileID: 1626272852}
   yawValText: {fileID: 513205156}
   yawVal: 0
+  currentHitPos: -999
 --- !u!114 &51811649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63963,9 +63964,9 @@ MonoBehaviour:
   startLineY: 5
   finishLineY: -3.5
   removeLineY: -5
-  badOffsetY: 0.5
-  goodOffsetY: 0.4
-  perfectOffsetY: 0.25
+  badOffsetY: 1
+  goodOffsetY: 0.7
+  perfectOffsetY: 0.5
   trackColors:
   - {r: 0.65882355, g: 0.5019608, b: 1, a: 1}
   - {r: 0.5137255, g: 0.5019608, b: 1, a: 1}
